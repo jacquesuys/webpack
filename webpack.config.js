@@ -1,10 +1,17 @@
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+
 module.exports = {
-	entry: [
-		'./src/index.js'
-	],
+	entry: ['./src/index.js', './styles/style.scss'],
 	output: {
 		path: __dirname,
-		filename: 'app/js/main.js'
+		filename: 'app/js/bundle.js'
+	},
+	resolve: {
+    extensions: ["", ".js", ".scss"]
+	},
+	devServer: {
+		port: 3000,
+		inline: true
 	},
 	module: {
 		loaders: [
@@ -15,7 +22,15 @@ module.exports = {
 				query: {
         	presets:['es2015', 'react']
       	}
-			}
+			},
+			{
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract(
+        	'style', // backup loader when not building .css file
+        	'css?sourceMap!sass?sourceMap' // loaders to preprocess CSS
+        )
+      }
 		]
-	}
+	},
+	plugins: [new ExtractTextPlugin('./app/css/style.css')]
 }
