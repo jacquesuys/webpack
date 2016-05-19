@@ -1,3 +1,3 @@
-# githubProfiles
+# Webpack Starter Kit
 
-An application to browse github profiles and their repos
+Basic config for react, webpack, sass
